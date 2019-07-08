@@ -1,0 +1,54 @@
+---
+- name: "Take Root AMI From us-west-1 Region And Publish To Selected Regions"
+  hosts: "localhost"
+  gather_facts: "False"
+  vars:
+    build_id: "{{ lookup('env', 'buildID') }}"
+    kubevirt_version: "{{ lookup('env', 'KUBEVIRT_VERSION') }}"
+    aws_key_id: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    aws_key_secret: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+    aws_root_ami: "{{ lookup('file','/tmp/root-ami-id') }}"
+    ec2Regions:
+      - us-east-1
+      - us-east-2
+#      - us-west-2
+#      - ca-central-1
+#      - eu-west-1
+#      - eu-west-2
+#      - eu-west-3
+#      - eu-central-1
+#      - ap-northeast-1
+#      - ap-southeast-1
+#      - ap-southeast-2
+#      - ap-south-1
+#      - sa-east-1
+  tasks:
+  - name: "Copy AMI From us-west-1 To All Target Regions"
+    register: "ami_return"
+    ec2_ami_copy:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      name: "kubevirt-{{ kubevirt_version }}-{{ build_id }}"
+      source_region: "us-west-1"
+      region: "{{ item }}"
+      source_image_id: "{{ aws_root_ami }}"
+      wait: "True"
+      wait_timeout: "1800"
+    with_items: "{{ ec2Regions }}"
+  - name: "Setting Visibility to Public On New AMI's"
+    ec2_ami:
+      region: "{{ item.item }}"
+      image_id: "{{ item.image_id }}"
+      launch_permissions:
+        group_names: ['all']
+    with_items: "{{ ami_return.results }}"
+  - name: "AMI promotion results to /tmp/copied-image-ids"
+    copy:
+      content: "{{ ami_return.results }}"
+      dest: "/tmp/copied-image-ids"
+  - name: "Generate JSON Document For Promoted AMI's And Save To /tmp/promoted-ami.json"
+    shell: "jq '.[] | {region: .item, ami_id: .image_id}' /tmp/copied-image-ids > /tmp/promoted-ami.json"
+  - name: "Generate JSON For Original Root AMI And Save It To /tmp/root-ami.json"
+    shell: "echo {\\\"region\\\": \\\"us-west-01\\\",\\\"ami_id\\\": \\\"$(cat /tmp/root-ami-id)\\\"} > /tmp/root-ami.json"
+  - name: "Join The Root AMI JSON With The JSON For The Promoted AMI's And Save to promoted-amis.json"
+    shell: "jq -s . /tmp/root-ami.json /tmp/promoted-ami.json > promoted-amis.json"
