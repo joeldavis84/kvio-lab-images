@@ -49,8 +49,8 @@
   - name: "Create JSON for Root AMI"
     set_fact:
       final_dict:
-        region: "us-west-1"
-        ami_id: "{{ aws_root_ami }}"
+      -  region: "us-west-1"
+         ami_id: "{{ aws_root_ami }}"
   - name: "Read JSON For Copied AMI"
     set_fact:
       copied_ami: "{{ lookup('file','/tmp/copied-image-ids') | from_json }}"
