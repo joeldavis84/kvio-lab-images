@@ -10,12 +10,16 @@
 
 set -x
 
-if [[ "$targetEnvironment" == "gcp" ]]; then
+if [[ -e ansible/${targetEnvironment}-publish.yml ]]; then
 
-  ansible-playbook -i /tmp/inventory --private-key ${SSH_KEY_LOCATION} ansible/${targetEnvironment}-publish.yml
+  if [[ "$targetEnvironment" == "gcp" ]]; then
 
-else
+    ansible-playbook -i /tmp/inventory --private-key ${SSH_KEY_LOCATION} ansible/${targetEnvironment}-publish.yml
 
-  ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
+  else
+
+    ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
+
+  fi
 
 fi
