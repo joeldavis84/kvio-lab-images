@@ -48,7 +48,7 @@
       dest: "/tmp/copied-image-ids"
   - name: "Create JSON for Root AMI"
     set_fact:
-      root_ami_record:
+      final_dict:
         region: "us-west-1"
         ami_id: "{{ aws_root_ami }}"
   - name: "Read JSON For Copied AMI"
@@ -58,7 +58,7 @@
     set_fact:
       final_dict: "{{ final_dict + [{'region': item.item, 'ami_id': item.image_id}] }}"
     with_items: "{{ copied_ami }}"
-  - name: "Write"
+  - name: "Write Final JSON TO new-images.json"
     copy:
       content: "{{final_dict}}"
       dest: "new-images.json"
