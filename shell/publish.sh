@@ -10,4 +10,6 @@
 
 set -x
 
+yum install -y jq
+
 ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
