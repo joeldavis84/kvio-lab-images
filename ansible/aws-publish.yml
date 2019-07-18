@@ -47,7 +47,7 @@
       content: "{{ ami_return.results }}"
       dest: "/tmp/copied-image-ids"
   - name: "Generate JSON Document For Promoted AMI's And Save To /tmp/promoted-ami.json"
-    shell: "jq '.[] | {region: .item, ami_id: .image_id}' /tmp/copied-image-ids > /tmp/promoted-ami.json"
+    shell: "jq '.[]' | {region: .item, ami_id: .image_id}' /tmp/copied-image-ids > /tmp/promoted-ami.json"
   - name: "Generate JSON For Original Root AMI And Save It To /tmp/root-ami.json"
     shell: "echo {\\\"region\\\": \\\"us-west-01\\\",\\\"ami_id\\\": \\\"$(cat /tmp/root-ami-id)\\\"} > /tmp/root-ami.json"
   - name: "Join The Root AMI JSON With The JSON For The Promoted AMI's And Save to promoted-amis.json"
