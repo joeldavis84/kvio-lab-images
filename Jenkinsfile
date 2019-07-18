@@ -56,7 +56,7 @@ cloudEnvironments.each { environName, environValues ->
 
     def archives = {
       step([$class   : 'ArtifactArchiver', allowEmptyArchive: true,
-           artifacts: 'ansible-*.log', fingerprint: true])
+           artifacts: 'ansible-*.log,promoted-amis.json', fingerprint: true])
     }
 
     deployOpenShiftTemplate(containersWithProps: containers, openshift_namespace: 'kubevirt', podName: podName,
