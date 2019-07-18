@@ -88,8 +88,11 @@ cloudEnvironments.each { environName, environValues ->
           } // END stage(prepare env)
 
           stage("${environName}-build-images") {
-            executeInContainer(containerName: 'ansible-executor', containerScript: "sh shell/dud.sh", stageVars: params, credentials: credentials)
-            //sh "echo $credentials > new-file"
+            executeInContainer(containerName: 'ansible-executor', containerScript: "sh shell/build.sh", stageVars: params, credentials: credentials)
+          }
+
+          stage("${environName}-publish-images") {
+            executeInContainer(containerName: 'ansible-executor', containerScript: "sh shell/publish.sh", stageVars: params, credentials: credentials)
           }
 
         } catch (e) {
