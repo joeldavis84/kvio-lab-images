@@ -61,6 +61,6 @@
   - name: "Write Final JSON TO new-images.json"
     copy:
       content: "{{final_dict}}"
-      dest: "new-images.json"
+      dest: "../new-images.json"
       mode: "0400"
 
