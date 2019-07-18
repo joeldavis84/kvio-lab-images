@@ -12,4 +12,12 @@ set -x
 
 yum install -y jq
 
-ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
+if [[ "$targetEnvironment" == "gcp" ]]; then
+
+  ansible-playbook -i /tmp/inventory --private-key ${SSH_KEY_LOCATION} ${targetEnvironment}-publish.yml
+
+else
+
+  ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
+
+fi
