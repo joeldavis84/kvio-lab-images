@@ -10,4 +10,4 @@
 
 set -x
 
-ansible-playbook ansible/${targetEnvironment}-provision.yml > ansible-publish-${targetEnvironment}.log 2>&1
+ansible-playbook ansible/${targetEnvironment}-publish.yml > ansible-publish-${targetEnvironment}.log 2>&1
