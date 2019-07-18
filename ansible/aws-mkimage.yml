@@ -24,6 +24,7 @@
       aws_access_key: "{{ aws_key_id }}"
       aws_secret_key: "{{ aws_key_secret }}"
       instance_id: "{{ aws_instance_id }}"
+      region: "us-west-1"
       launch_permissions:
         group_names: ['all']
       wait: "yes"
