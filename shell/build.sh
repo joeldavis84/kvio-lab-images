@@ -1,5 +1,6 @@
 #!/bin/bash
 
 echo "KubeVirt Version: $KUBEVIRT_VERSION"
+echo "Target Environment: $targetEnvironment"
 
-echo "Placeholder for build images script"
+env
