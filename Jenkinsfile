@@ -87,7 +87,7 @@ cloudEnvironments.each { environName, environValues ->
 
           } // END stage(prepare env)
 
-          stage("${environName}-validate-provision") {
+          stage("${environName}-build-images") {
             executeInContainer(containerName: 'ansible-executor', containerScript: "sh shell/dud.sh", stageVars: params, credentials: credentials)
             //sh "echo $credentials > new-file"
           }
