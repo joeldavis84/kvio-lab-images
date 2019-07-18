@@ -28,12 +28,12 @@ def aws_credentials = [
 def cloudEnvironments = [
 
   'aws': [
-    'envFile': 'config/environment.aws',
+    'envFile': 'environment',
     'credentials': aws_credentials
   ],
 
   'gcp': [
-    'envFile': 'config/environment.gcp',
+    'envFile': 'environment',
     'credentials': gcp_credentials
   ]
 ]
