@@ -23,6 +23,11 @@
 #      - ap-south-1
 #      - sa-east-1
   tasks:
+  - name: "Ensure jq Binary Is Present"
+    become: "True"
+    yum:
+      name: "jq"
+      state: "latest"
   - name: "Copy AMI From us-west-1 To All Target Regions"
     register: "ami_return"
     ec2_ami_copy:

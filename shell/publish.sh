@@ -10,8 +10,6 @@
 
 set -x
 
-yum install -y jq
-
 if [[ "$targetEnvironment" == "gcp" ]]; then
 
   ansible-playbook -i /tmp/inventory --private-key ${SSH_KEY_LOCATION} ${targetEnvironment}-publish.yml
