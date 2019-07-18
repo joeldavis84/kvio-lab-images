@@ -33,7 +33,7 @@ def cloudEnvironments = [
   ],
 
   'gcp': [
-#    'envFile': 'config/environment.gcp',
+    'envFile': 'config/environment.gcp',
     'credentials': gcp_credentials
   ]
 ]
