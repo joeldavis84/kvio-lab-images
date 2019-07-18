@@ -70,7 +70,7 @@ cloudEnvironments.each { environName, environValues ->
 
             handlePipelineStep {
 
-              echo "STARTING TESTS FOR ${environName}"
+              echo "STARTING BUILDS FOR ${environName}"
 
                 // Clone this git repo into the container so that included scripts can be ran.
               checkout scm
@@ -82,6 +82,13 @@ cloudEnvironments.each { environName, environValues ->
               params = readProperties file: environValues['envFile']
               params['targetEnvironment'] = "${environName}"
               params['buildID'] = "${BUILD_ID}"
+
+                // Default to using the latest version of Kubevirt
+                // TODO: This should be capable of being overridden by build parameter
+              params['KUBEVIRT_VERSION'] = sh (
+                script: 'curl -s https://api.github.com/repos/kubevirt/kubevirt/releases/latest | jq -r .tag_name | sed \'s/^v//\'',
+                returnStdout: true
+              ).trim()
 
             }
 
