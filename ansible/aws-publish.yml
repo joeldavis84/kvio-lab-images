@@ -33,7 +33,7 @@
       region: "{{ item }}"
       source_image_id: "{{ aws_root_ami }}"
       wait: "True"
-      wait_timeout: "2700"
+      wait_timeout: "3600"
     with_items: "{{ ec2Regions }}"
   - name: "Setting Visibility to Public On New AMI's"
     ec2_ami:
