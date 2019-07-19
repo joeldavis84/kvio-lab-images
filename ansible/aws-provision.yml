@@ -22,6 +22,11 @@
       region: "us-west-1"
       vpc_subnet_id: "subnet-06841259e5431c9ed"
       assign_public_ip: "yes"
+      volumes:
+      - device_name: "/dev/sda1"
+        device_type: "gp2"
+        volume_size: "30"
+        delete_on_termination: "true"
       instance_tags:
         KubevirtCI: "yes"
         Name: "kubevirt-labci-imagebuild{{ build_id }}"
