@@ -36,6 +36,7 @@
       group: "centos"
       groups: 
       - "libvirt"
+      - "google-sudoers"
   - name: Download and Install minikube Binary
     become: True
     copy:
