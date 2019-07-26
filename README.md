@@ -26,9 +26,9 @@ Then the next step comes in:
 This will execute 1 another ansible playbook:
 
 - `${PROVIDER}-publish.yml`: On the previous instace created using a googlecloud-sdk base image:
-    - Copy the credentials to remote instance
+    - Copy the credentials to remote instance.
     - Exports the image generated to a GCS bucket on a tar.gz file
-    - Stops and delete the instance
+    - Stops and delete the instance.
     - The exported Targz file contains the raw disk of the GCE instance.
 
 On AWS case, this last step changes. The YAML file will propagate the AMI image among some regions (listed bellow), then a JSON file is generated with the AMI ID's info.
@@ -63,3 +63,4 @@ This repo let the user to access to an instance on GCE or AWS which contains all
 - Reduce Ansible `copy` tasks using loops.
 - Delete bin folder in order to download from internet.
 - Deploy Kubevirt and CDI using operator instead of kubevirt-ansible.
+- Move those repositories under Kubevirt Organization
