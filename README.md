@@ -31,7 +31,7 @@ This will execute 1 another ansible playbook:
     - Stops and delete the instance
     - The exported Targz file contains the raw disk of the GCE instance.
 
-On AWS case, this last step changes. The YAML file will propagate the AMI image among some regions (listed bellow)
+On AWS case, this last step changes. The YAML file will propagate the AMI image among some regions (listed bellow), then a JSON file is generated with the AMI ID's info.
 
 ### AWS Regions to propagate to
 
@@ -48,3 +48,18 @@ On AWS case, this last step changes. The YAML file will propagate the AMI image 
 - ap-southeast-2
 - ap-south-1
 - sa-east-1
+
+## Enhancements
+
+This repo let the user to access to an instance on GCE or AWS which contains all the necessary to run through the labs, but does not install anything until the user spin up the instance. This is important to know because we only gain some speed downloading some resources and we need to maintain many things and dedicate some resources to do this.
+
+### TO-DO
+
+- Inline inventories.
+- ENV Vars for Ansible config.
+- Make ${PROVIDER}-setup.yml generic for all providers using `block`.
+- Maybe we could valorate to create generic YAML files instead of have one per provider.
+- Use [Krew](https://github.com/kubernetes-sigs/krew) to install `virtctl` as a plugin
+- Reduce Ansible `copy` tasks using loops.
+- Delete bin folder in order to download from internet.
+- Deploy Kubevirt and CDI using operator instead of kubevirt-ansible.
